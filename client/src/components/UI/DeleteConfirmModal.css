@@ -1,0 +1,837 @@
+/* Unified Delete Confirm Modal Styles */
+
+/* Modal backdrop */
+.fixed.inset-0.bg-black.bg-opacity-50 {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  z-index: 1040 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Large screen backdrop adjustments */
+@media (min-width: 1200px) {
+  .fixed.inset-0.bg-black.bg-opacity-50 {
+    padding: 2rem !important;
+    align-items: flex-start !important;
+    padding-top: 5vh !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .fixed.inset-0.bg-black.bg-opacity-50 {
+    padding: 3rem !important;
+    padding-top: 8vh !important;
+  }
+}
+
+.delete-confirm-modal {
+  max-width: 90vw !important;
+  width: 500px !important;
+  margin: 0 !important;
+  max-height: 85vh !important;
+  min-height: 350px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  position: relative !important;
+  background-color: white !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+  z-index: 1050 !important;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+
+/* Modal header - fixed at top */
+.delete-confirm-modal .modal-header {
+  flex-shrink: 0;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+/* Modal body - scrollable content */
+.delete-confirm-modal .modal-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.5rem;
+  max-height: calc(85vh - 140px);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Target the actual content div with p-4 class */
+.delete-confirm-modal .p-4 {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(85vh - 140px);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Modal footer - fixed at bottom */
+.delete-confirm-modal .modal-footer {
+  flex-shrink: 0;
+  border-top: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  padding: 1rem 1.5rem;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 10;
+}
+
+/* Target the actual footer structure from JSX */
+.delete-confirm-modal .border-top.bg-light {
+  flex-shrink: 0 !important;
+  border-top: 1px solid #dee2e6 !important;
+  background-color: #f8f9fa !important;
+  padding: 1rem 1.5rem !important;
+  min-height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Enhanced scrollbar for modal body */
+.delete-confirm-modal .modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.delete-confirm-modal .modal-body::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+.delete-confirm-modal .modal-body::-webkit-scrollbar-thumb {
+  background: #6c757d;
+  border-radius: 4px;
+  border: 1px solid #f8f9fa;
+}
+
+.delete-confirm-modal .modal-body::-webkit-scrollbar-thumb:hover {
+  background: #495057;
+}
+
+.delete-confirm-modal .modal-body::-webkit-scrollbar-thumb:active {
+  background: #343a40;
+}
+
+/* Firefox scrollbar styling */
+.delete-confirm-modal .modal-body {
+  scrollbar-width: thin;
+  scrollbar-color: #6c757d #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .delete-confirm-modal {
+    max-width: 95vw !important;
+    width: 95vw !important;
+    margin: 10px !important;
+    max-height: 95vh !important;
+    min-height: 250px !important;
+  }
+  
+  .delete-confirm-modal .modal-body {
+    max-height: calc(95vh - 120px);
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  
+  .delete-confirm-modal .modal-footer {
+    padding: 0.75rem 1rem;
+    min-height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .delete-confirm-modal {
+    max-width: 98vw !important;
+    width: 98vw !important;
+    margin: 5px !important;
+    max-height: 98vh !important;
+    min-height: 200px !important;
+  }
+  
+  .delete-confirm-modal .modal-body {
+    max-height: calc(98vh - 100px);
+    padding: 0.75rem;
+    overflow-y: auto;
+  }
+  
+  .delete-confirm-modal .modal-footer {
+    padding: 0.5rem 0.75rem;
+    min-height: 50px;
+  }
+}
+
+/* Ensure proper spacing and alignment */
+.delete-confirm-modal .btn {
+  border-radius: 0.375rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.delete-confirm-modal .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Button styling for all screen sizes */
+.delete-confirm-modal .btn {
+  min-width: 120px;
+  min-height: 40px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Button spacing and layout - Target the actual footer structure */
+.delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 0.5rem !important;
+  flex-wrap: wrap;
+  width: 100% !important;
+  align-items: center !important;
+  min-height: 50px !important;
+}
+
+/* Ensure footer buttons are always visible */
+.delete-confirm-modal .modal-footer .d-flex,
+.delete-confirm-modal .border-top .d-flex {
+  min-height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  width: 100% !important;
+}
+
+/* Target the actual footer structure from JSX */
+.delete-confirm-modal .border-top {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 0.5rem !important;
+  padding: 1rem !important;
+  background-color: #f8f9fa !important;
+  border-top: 1px solid #dee2e6 !important;
+  min-height: 70px !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+}
+
+/* Very small mobile (344px and below) */
+@media (max-width: 344px) {
+  .delete-confirm-modal {
+    max-width: 98vw !important;
+    width: 98vw !important;
+    margin: 0.25rem !important;
+    max-height: 98vh !important;
+    min-height: 240px !important;
+  }
+  
+  .delete-confirm-modal .btn {
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+    min-width: auto !important;
+    min-height: 42px !important;
+    font-size: 0.85rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+  
+  .delete-confirm-modal .btn:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .delete-confirm-modal .border-top {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    padding: 0.5rem !important;
+    min-height: 110px !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+}
+
+/* Very small mobile (345px - 360px) */
+@media (min-width: 345px) and (max-width: 360px) {
+  .delete-confirm-modal {
+    max-width: 95vw !important;
+    width: 95vw !important;
+    margin: 0.5rem !important;
+    max-height: 95vh !important;
+    min-height: 250px !important;
+  }
+  
+  .delete-confirm-modal .btn {
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+    min-width: auto !important;
+    min-height: 44px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .delete-confirm-modal .btn:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .delete-confirm-modal .border-top {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    padding: 0.75rem !important;
+    min-height: 100px !important;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+}
+
+/* Small mobile (361px - 480px) */
+@media (min-width: 361px) and (max-width: 480px) {
+  .delete-confirm-modal {
+    max-width: 90vw !important;
+    width: 90vw !important;
+    margin: 1rem !important;
+    max-height: 90vh !important;
+    min-height: 280px !important;
+  }
+  
+  .delete-confirm-modal .btn {
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+    min-width: auto !important;
+    min-height: 44px !important;
+  }
+  
+  .delete-confirm-modal .btn:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .delete-confirm-modal .border-top {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    padding: 1rem !important;
+    min-height: 90px !important;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+}
+
+/* Mobile button styling (481px - 576px) */
+@media (min-width: 481px) and (max-width: 576px) {
+  .delete-confirm-modal .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    min-width: auto;
+  }
+  
+  .delete-confirm-modal .btn:last-child {
+    margin-bottom: 0;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    flex-direction: column;
+    gap: 0.5rem !important;
+  }
+}
+
+/* Specific for 540px screens */
+@media (min-width: 540px) and (max-width: 540px) {
+  .delete-confirm-modal {
+    max-width: 85vw !important;
+    width: 85vw !important;
+    max-height: 85vh !important;
+    min-height: 320px !important;
+  }
+  
+  .delete-confirm-modal .btn {
+    min-width: 120px !important;
+    min-height: 42px !important;
+    flex: 1 !important;
+    max-width: 45% !important;
+  }
+  
+  .delete-confirm-modal .border-top {
+    flex-direction: row !important;
+    gap: 0.75rem !important;
+    padding: 1rem !important;
+    min-height: 80px !important;
+    justify-content: flex-end !important;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    flex-direction: row !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+    justify-content: flex-end !important;
+  }
+}
+
+/* Tablet button styling (541px - 767px) */
+@media (min-width: 541px) and (max-width: 767px) {
+  .delete-confirm-modal .btn {
+    min-width: 100px;
+    flex: 1;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    flex-direction: row;
+    gap: 0.75rem !important;
+  }
+}
+
+/* Focus states for accessibility */
+.delete-confirm-modal .btn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* Loading state */
+.delete-confirm-modal.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Ensure text doesn't overflow */
+.delete-confirm-modal .text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Better spacing for warning section */
+.delete-confirm-modal .alert-warning {
+  border-left: 4px solid #f59e0b;
+}
+
+.delete-confirm-modal .alert-danger {
+  border-left: 4px solid #dc3545;
+}
+
+/* Improved typography */
+.delete-confirm-modal h2,
+.delete-confirm-modal h3,
+.delete-confirm-modal h4,
+.delete-confirm-modal h5,
+.delete-confirm-modal h6 {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.delete-confirm-modal p {
+  line-height: 1.5;
+}
+
+/* Better list styling */
+.delete-confirm-modal .list-unstyled li {
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+/* Ensure proper z-index */
+.delete-confirm-modal {
+  z-index: 1050 !important;
+}
+
+/* Force button visibility and positioning */
+.delete-confirm-modal .btn {
+  position: relative !important;
+  z-index: 10 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Ensure footer is always visible */
+.delete-confirm-modal .border-top {
+  position: relative !important;
+  z-index: 10 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+/* Force button container visibility */
+.delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+  position: relative !important;
+  z-index: 10 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+  width: 100% !important;
+  min-height: 50px !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+/* Ensure buttons are always visible on desktop */
+@media (min-width: 768px) {
+  .delete-confirm-modal .btn {
+    min-height: 44px !important;
+    min-width: 120px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    border: 2px solid transparent !important;
+    border-radius: 0.375rem !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+  }
+  
+  .delete-confirm-modal .btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  .delete-confirm-modal .btn:active {
+    transform: translateY(0) !important;
+  }
+}
+
+/* Item-specific styling */
+.item-info-section {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Role badge styling */
+.role-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.badge-info {
+  background-color: #0dcaf0;
+  color: white;
+}
+
+.badge-success {
+  background-color: #198754;
+  color: white;
+}
+
+.badge-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Role icon styling */
+.role-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.role-icon.text-red-600 {
+  color: #dc2626;
+}
+
+.role-icon.text-blue-600 {
+  color: #2563eb;
+}
+
+.role-icon.text-green-600 {
+  color: #16a34a;
+}
+
+.role-icon.text-secondary-600 {
+  color: #6b7280;
+}
+
+/* Warning alert styling */
+.alert-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Spinner styling */
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.125rem;
+}
+
+/* Content organization improvements */
+.delete-confirm-modal .bg-light {
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+}
+
+/* Better spacing for content sections */
+.delete-confirm-modal > * {
+  margin-bottom: 1rem;
+}
+
+.delete-confirm-modal > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Improved typography for better readability */
+.delete-confirm-modal p {
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.delete-confirm-modal .small {
+  line-height: 1.5;
+}
+
+/* Better list styling */
+.delete-confirm-modal .list-unstyled {
+  margin-bottom: 0;
+}
+
+.delete-confirm-modal .list-unstyled li {
+  line-height: 1.5;
+  margin-bottom: 0.25rem;
+}
+
+.delete-confirm-modal .list-unstyled li:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure proper text wrapping */
+.delete-confirm-modal .text-muted {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Better icon alignment */
+.delete-confirm-modal .flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.delete-confirm-modal .me-3 {
+  margin-right: 0.75rem;
+}
+
+/* Desktop-specific improvements */
+@media (min-width: 768px) {
+  .delete-confirm-modal {
+    max-width: 600px !important;
+    width: 600px !important;
+    min-height: 350px !important;
+  }
+  
+  .delete-confirm-modal .modal-body {
+    padding: 2rem;
+    max-height: calc(90vh - 140px);
+  }
+  
+  .delete-confirm-modal .modal-footer {
+    padding: 1.5rem 2rem;
+    min-height: 80px;
+  }
+  
+  .delete-confirm-modal .btn {
+    min-width: 140px;
+    min-height: 44px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    gap: 1rem !important;
+  }
+}
+
+/* Specific for 1024px screens */
+@media (min-width: 1024px) and (max-width: 1024px) {
+  .delete-confirm-modal {
+    max-width: 550px !important;
+    width: 550px !important;
+    max-height: 75vh !important;
+    min-height: 420px !important;
+  }
+  
+  .delete-confirm-modal .btn {
+    min-width: 140px !important;
+    min-height: 46px !important;
+    padding: 0.75rem 1.75rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+  }
+  
+  .delete-confirm-modal .border-top {
+    padding: 1.5rem !important;
+    min-height: 90px !important;
+    gap: 1rem !important;
+  }
+  
+  .delete-confirm-modal .border-top.bg-light {
+    min-height: 90px !important;
+    padding: 1.5rem !important;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    gap: 1rem !important;
+  }
+  
+  .delete-confirm-modal .p-4 {
+    max-height: calc(75vh - 180px) !important;
+  }
+}
+
+/* Desktop improvements (1025px - 1199px) */
+@media (min-width: 1025px) and (max-width: 1199px) {
+  .delete-confirm-modal {
+    max-width: 580px !important;
+    width: 580px !important;
+    max-height: 75vh !important;
+    min-height: 430px !important;
+  }
+  
+  .delete-confirm-modal .btn {
+    min-width: 145px !important;
+    min-height: 47px !important;
+    padding: 0.8rem 1.8rem !important;
+    font-size: 0.98rem !important;
+    font-weight: 600 !important;
+  }
+  
+  .delete-confirm-modal .border-top {
+    padding: 1.5rem !important;
+    min-height: 90px !important;
+    gap: 1.1rem !important;
+  }
+  
+  .delete-confirm-modal .border-top.bg-light {
+    min-height: 90px !important;
+    padding: 1.5rem !important;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    gap: 1.1rem !important;
+  }
+  
+  .delete-confirm-modal .p-4 {
+    max-height: calc(75vh - 180px) !important;
+  }
+}
+
+/* Large desktop improvements (1200px+) */
+@media (min-width: 1200px) {
+  .delete-confirm-modal {
+    max-width: 600px !important;
+    width: 600px !important;
+    max-height: 75vh !important;
+    min-height: 450px !important;
+  }
+  
+  .delete-confirm-modal .modal-body {
+    padding: 2rem;
+    max-height: calc(75vh - 180px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .delete-confirm-modal .modal-footer {
+    padding: 1.5rem 2rem;
+    min-height: 90px;
+    flex-shrink: 0;
+  }
+  
+  .delete-confirm-modal .border-top.bg-light {
+    min-height: 90px !important;
+    padding: 1.5rem 2rem !important;
+  }
+  
+  .delete-confirm-modal .btn {
+    min-width: 150px;
+    min-height: 48px;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .delete-confirm-modal .d-flex.justify-content-end.gap-2 {
+    gap: 1.25rem !important;
+  }
+  
+  .delete-confirm-modal .p-4 {
+    max-height: calc(75vh - 180px) !important;
+  }
+}
+
+/* Extra large desktop (1440px+) */
+@media (min-width: 1440px) {
+  .delete-confirm-modal {
+    max-width: 650px !important;
+    width: 650px !important;
+    max-height: 75vh !important;
+  }
+  
+  .delete-confirm-modal .modal-body {
+    max-height: calc(75vh - 160px);
+    padding: 2.5rem;
+  }
+  
+  .delete-confirm-modal .modal-footer {
+    padding: 2rem 2.5rem;
+  }
+  
+  .delete-confirm-modal .btn {
+    min-width: 160px;
+    min-height: 50px;
+    padding: 1rem 2.25rem;
+    font-size: 1.1rem;
+  }
+}

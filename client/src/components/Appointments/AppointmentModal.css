@@ -1,0 +1,143 @@
+/* Additional styles for AppointmentModal responsiveness */
+
+/* Modal container and content sizing */
+.appointment-modal-container {
+  padding: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.appointment-modal-content {
+  min-height: 60vh;
+  max-height: 90vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Responsive modal dimensions */
+@media (max-width: 575.98px) {
+  .appointment-modal-container {
+    padding: 0.5rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .appointment-modal-content {
+    max-height: 95vh;
+    margin: 0.25rem;
+    min-height: 70vh;
+    max-width: 100vw;
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .appointment-modal-content {
+    max-width: 95vw;
+    min-height: 65vh;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .appointment-modal-content {
+    max-width: 90vw;
+    min-height: 60vh;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .appointment-modal-content {
+    max-width: 85vw;
+    min-height: 55vh;
+  }
+}
+
+@media (min-width: 1200px) {
+  .appointment-modal-content {
+    max-width: 80vw;
+    min-height: 50vh;
+  }
+}
+
+/* Improve form field spacing on mobile */
+@media (max-width: 768px) {
+  .appointment-form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .appointment-form-field {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Ensure textareas are properly sized */
+.appointment-textarea {
+  resize: vertical;
+  min-height: 80px;
+  max-height: 120px;
+}
+
+/* Improve button spacing on mobile */
+@media (max-width: 640px) {
+  .appointment-modal-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .appointment-modal-footer button {
+    width: 100%;
+  }
+}
+
+/* Enhanced scrollbar styling for better UX */
+.appointment-modal-body {
+  scrollbar-width: thin;
+  scrollbar-color: #4a5568 #f7fafc;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.appointment-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.appointment-modal-body::-webkit-scrollbar-track {
+  background: #f7fafc;
+  border-radius: 4px;
+}
+
+.appointment-modal-body::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 4px;
+  border: 1px solid #f7fafc;
+}
+
+.appointment-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #2d3748;
+}
+
+.appointment-modal-body::-webkit-scrollbar-thumb:active {
+  background: #1a202c;
+}
+
+/* Smooth scrolling */
+.appointment-modal-body {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for better accessibility */
+.appointment-modal-body:focus {
+  outline: none;
+}
+
+/* Ensure proper spacing in modal header and footer */
+.appointment-modal-header {
+  min-height: 60px;
+}
+
+.appointment-modal-footer {
+  min-height: 70px;
+}

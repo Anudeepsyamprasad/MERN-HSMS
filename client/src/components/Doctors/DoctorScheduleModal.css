@@ -1,0 +1,400 @@
+/* Doctor Schedule Modal Styles */
+
+.doctor-schedule-modal {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Custom scrollbar for modal content */
+.modal-content-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.modal-content-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content-scroll::-webkit-scrollbar-track {
+  background: #f7fafc;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.modal-content-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  border: 1px solid #f7fafc;
+}
+
+.modal-content-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+  border: 1px solid #e2e8f0;
+}
+
+.modal-content-scroll::-webkit-scrollbar-thumb:active {
+  background: #718096;
+}
+
+/* Ensure modal never exceeds viewport */
+.modal-container {
+  max-height: 90vh;
+  max-width: 95vw;
+}
+
+@media (min-width: 640px) {
+  .modal-container {
+    max-height: 85vh;
+    max-width: 90vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-container {
+    max-height: 80vh;
+    max-width: 85vw;
+  }
+}
+
+/* Grid layout improvements */
+.appointment-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .appointment-grid {
+    grid-template-columns: 3fr 6fr 3fr;
+    gap: 1rem;
+  }
+}
+
+/* Responsive modal sizing */
+@media (max-width: 480px) {
+  .modal-container {
+    margin: 0.25rem;
+    max-height: calc(100vh - 0.5rem);
+    border-radius: 0.5rem;
+  }
+  
+  .modal-content-scroll {
+    padding: 0.5rem;
+  }
+  
+  .appointment-item {
+    padding: 0.75rem;
+  }
+  
+  .appointment-details {
+    font-size: 0.875rem;
+  }
+  
+  .status-badge {
+    font-size: 0.625rem;
+    padding: 0.125rem 0.375rem;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 640px) {
+  .modal-container {
+    margin: 0.5rem;
+    max-height: calc(100vh - 1rem);
+  }
+  
+  .modal-content-scroll {
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .modal-container {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  .modal-content-scroll {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .modal-container {
+    margin: 1.5rem;
+    max-height: calc(100vh - 3rem);
+  }
+  
+  .modal-content-scroll {
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .modal-container {
+    margin: 2rem;
+    max-height: calc(100vh - 4rem);
+  }
+  
+  .modal-content-scroll {
+    padding: 1.5rem;
+  }
+}
+
+/* Additional responsive improvements */
+@media (max-width: 320px) {
+  .modal-container {
+    margin: 0.125rem;
+    max-height: calc(100vh - 0.25rem);
+    border-radius: 0.25rem;
+  }
+  
+  .modal-content-scroll {
+    padding: 0.25rem;
+  }
+}
+
+/* Form input improvements for mobile */
+@media (max-width: 640px) {
+  .form-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Better touch targets for mobile */
+@media (max-width: 768px) {
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Filter controls improvements */
+.filter-controls {
+  transition: all 0.3s ease;
+}
+
+.filter-controls select,
+.filter-controls input {
+  transition: all 0.2s ease;
+}
+
+.filter-controls select:focus,
+.filter-controls input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Prevent modal from exceeding screen on filter change */
+.modal-content-scroll {
+  max-height: calc(100vh - 200px);
+}
+
+@media (max-width: 640px) {
+  .modal-content-scroll {
+    max-height: calc(100vh - 180px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .modal-content-scroll {
+    max-height: calc(100vh - 220px);
+  }
+}
+
+.schedule-appointment-item {
+  transition: all 0.2s ease;
+}
+
+.schedule-appointment-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  text-transform: capitalize;
+}
+
+.status-confirmed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-in-progress {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-completed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-cancelled {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.status-no-show {
+  background-color: #fed7aa;
+  color: #ea580c;
+}
+
+.status-booked {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.appointment-time {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+}
+
+.patient-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.appointment-reason {
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+.appointment-notes {
+  background-color: #f9fafb;
+  border-left: 3px solid #3b82f6;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.schedule-controls {
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.schedule-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.schedule-header h2 {
+  color: white;
+}
+
+.schedule-header p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .schedule-modal {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  .schedule-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .appointment-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .appointment-reason {
+    max-width: 100%;
+  }
+}
+
+/* Loading animation */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-state-icon {
+  color: #d1d5db;
+  margin-bottom: 1rem;
+}
+
+/* Status icons */
+.status-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.status-icon.confirmed {
+  color: #10b981;
+}
+
+.status-icon.in-progress {
+  color: #3b82f6;
+  animation: pulse 2s infinite;
+}
+
+.status-icon.completed {
+  color: #059669;
+}
+
+.status-icon.cancelled {
+  color: #ef4444;
+}
+
+.status-icon.no-show {
+  color: #f59e0b;
+}
+
+.status-icon.booked {
+  color: #6b7280;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

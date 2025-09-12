@@ -95,7 +95,10 @@ Backend Setup
    MONGODB_URI=mongodb://localhost:27017/hospital_management
    JWT_SECRET=your_jwt_secret_key_here_make_it_long_and_secure
    JWT_EXPIRE=30d
-4. Start the backend server
+4. Set up the database with sample data (optional)
+   npm run setup
+
+5. Start the backend server
    npm run server
 Frontend Setup
 1. Navigate to client directory
@@ -104,6 +107,24 @@ Frontend Setup
    npm install
 3. Start the React development server
    npm start
+Database Setup (Optional)
+
+To populate your database with sample data for testing:
+
+1. Run the database setup script
+   npm run setup
+
+This will create:
+- Test users (admin, doctor, patient)
+- Sample patient and doctor records
+- Sample appointments
+- Sample medical records
+
+Test Credentials:
+- Admin: admin@hospital.com / admin123
+- Doctor: doctor1@hospital.com / doctor123
+- Patient: patient1@hospital.com / patient123
+
 Running Both Servers
 From the root directory, run both servers simultaneously:
 npm run dev

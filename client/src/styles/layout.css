@@ -1,0 +1,393 @@
+/* Consolidated Layout Styles for Desktop */
+
+/* Desktop Layout Optimizations */
+@media (min-width: 1200px) {
+  /* Root layout improvements */
+  .layout-container {
+    overflow-x: hidden;
+  }
+  
+  /* Sidebar desktop optimizations */
+  .sidebar-desktop {
+    width: 256px !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 50 !important;
+    transform: translateX(0) !important;
+    transition: none !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  /* Main content wrapper desktop spacing */
+  .main-content-wrapper {
+    margin-left: 256px !important;
+    width: calc(100% - 256px) !important;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  /* Main content desktop spacing */
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  /* Container fluid desktop spacing */
+  .main-content .container-fluid {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 2rem 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  /* Reset all component margins to prevent extra spacing */
+  .main-content-wrapper > *,
+  .main-content > *,
+  .main-content .container-fluid > * {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  /* Bootstrap grid system fixes */
+  .main-content .container-fluid .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .main-content .container-fluid .col,
+  .main-content .container-fluid [class*="col-"] {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  /* Header desktop improvements - ensure full width */
+  .main-content .position-sticky {
+    margin-left: -2.5rem;
+    margin-right: -2.5rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    width: calc(100% + 5rem);
+    position: relative;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Hide mobile-specific elements on desktop */
+  .d-xl-none {
+    display: none !important;
+  }
+  
+  /* Show desktop-specific elements */
+  .d-xl-block {
+    display: block !important;
+  }
+  
+  /* Desktop navigation improvements */
+  .nav-link {
+    padding: 0.875rem 1rem;
+    margin: 0.125rem 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .nav-link:hover {
+    background-color: #f1f5f9;
+    transform: translateX(2px);
+  }
+  
+  .nav-link.active {
+    background-color: #3b82f6;
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+  
+  /* Desktop sidebar scrollbar styling */
+  .sidebar-navigation {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f8fafc;
+  }
+  
+  .sidebar-navigation::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .sidebar-navigation::-webkit-scrollbar-track {
+    background: #f8fafc;
+    border-radius: 4px;
+  }
+  
+  .sidebar-navigation::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+    border: 2px solid #f8fafc;
+  }
+  
+  .sidebar-navigation::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+  
+  /* Desktop search improvements */
+  .main-content .position-relative input {
+    min-width: 300px;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .main-content .position-relative input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+  }
+  
+  /* Desktop button improvements */
+  .main-content .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .main-content .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Desktop card improvements */
+  .main-content .card {
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .main-content .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Desktop form improvements */
+  .main-content .form-control,
+  .main-content .form-select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease-in-out;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .main-content .form-control:focus,
+  .main-content .form-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+  }
+  
+  /* Component-specific spacing fixes */
+  .dashboard-container,
+  .patients-container,
+  .doctors-container,
+  .appointments-container,
+  .medical-records-container,
+  .users-container,
+  .profile-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Nested container fixes */
+  .main-content .container-fluid .container,
+  .main-content .container-fluid .container-fluid {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Ensure proper box-sizing */
+  .main-content-wrapper *,
+  .main-content * {
+    box-sizing: border-box;
+  }
+}
+
+/* Large desktop improvements (1400px+) */
+@media (min-width: 1400px) {
+  .main-content .container-fluid {
+    padding: 2.5rem 3rem;
+    max-width: 1600px;
+  }
+  
+  .main-content .position-sticky {
+    margin-left: -3rem;
+    margin-right: -3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    width: calc(100% + 6rem);
+  }
+  
+  /* Larger sidebar for very large screens */
+  .sidebar-desktop {
+    width: 280px !important;
+  }
+  
+  .main-content-wrapper {
+    margin-left: 280px !important;
+    width: calc(100% - 280px) !important;
+  }
+  
+  /* Larger navigation items */
+  .nav-link {
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Larger search input */
+  .main-content .position-relative input {
+    min-width: 350px;
+    padding: 0.875rem 1.25rem 0.875rem 3rem;
+  }
+  
+  .main-content .container-fluid .col,
+  .main-content .container-fluid [class*="col-"] {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Extra large desktop improvements (1600px+) */
+@media (min-width: 1600px) {
+  .main-content .container-fluid {
+    padding: 3rem 4rem;
+    max-width: 1800px;
+  }
+  
+  .main-content .position-sticky {
+    margin-left: -4rem;
+    margin-right: -4rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    width: calc(100% + 8rem);
+  }
+  
+  .main-content .container-fluid .col,
+  .main-content .container-fluid [class*="col-"] {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Desktop-specific animations */
+@media (min-width: 1200px) {
+  .fade-in-desktop {
+    animation: fadeInDesktop 0.4s ease-in-out;
+  }
+  
+  .slide-up-desktop {
+    animation: slideUpDesktop 0.4s ease-in-out;
+  }
+  
+  @keyframes fadeInDesktop {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideUpDesktop {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Desktop hover effects */
+@media (min-width: 1200px) and (hover: hover) {
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+}
+
+/* Desktop focus improvements */
+@media (min-width: 1200px) {
+  .focus-ring:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  .focus-ring-inset:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: -2px;
+  }
+}
+
+/* Desktop scrollbar improvements */
+@media (min-width: 1200px) {
+  .desktop-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f8fafc;
+  }
+  
+  .desktop-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .desktop-scrollbar::-webkit-scrollbar-track {
+    background: #f8fafc;
+    border-radius: 4px;
+  }
+  
+  .desktop-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+    border: 2px solid #f8fafc;
+  }
+  
+  .desktop-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+  
+  .desktop-scrollbar::-webkit-scrollbar-corner {
+    background: #f8fafc;
+  }
+}

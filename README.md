@@ -25,17 +25,20 @@ The system follows a client-server architecture with clear separation of concern
 - User registration and login with comprehensive validation
 - Password change functionality with security checks
 - Session management with automatic token refresh
+- 
 _User Management_
 - Patient Management: Complete patient profiles with medical history, demographics, and contact information
 - Doctor Management: Doctor profiles with specializations, schedules, and professional details
 - Admin Panel: Full system administration with user management capabilities
 - Profile Management: Users can update their own profiles and preferences
+- 
 _Appointment System_
 - Smart Appointment Booking with conflict detection and availability checking
 - Schedule Management for doctors with flexible time slots
 - Status Tracking (booked, confirmed, in-progress, completed, cancelled, no-show)
 - Real-time Availability checking based on doctor schedules
 - Appointment History and future booking management
+- 
 _Medical Records Management_
 - Comprehensive Medical Records with detailed diagnoses and treatment plans
 - Vital Signs Tracking (blood pressure, heart rate, temperature, etc.)
@@ -43,13 +46,16 @@ _Medical Records Management_
 - Lab Results and Imaging record integration
 - Treatment Plans and follow-up scheduling
 - Medical History tracking across multiple visits
+- 
 _Dashboard and Analytics_
 - Role-based Dashboards with relevant statistics and quick actions
 - Recent Activity Overview for all user types
 - Quick Action Buttons for common tasks
 - Real-time Data Updates and notifications
 - Statistics and Reports for administrative insights
+- 
 **Technology Stack**
+  
 _Backend Technologies_
 - Node.js - JavaScript runtime environment for server-side development
 - Express.js - Fast, unopinionated web framework for Node.js
@@ -60,6 +66,7 @@ _Backend Technologies_
 - express-validator - Input validation and sanitization
 - helmet - Security middleware for HTTP headers
 - cors - Cross-origin resource sharing configuration
+- 
 _Frontend Technologies_
 - React.js - Modern UI library for building interactive user interfaces
 - React Router - Declarative routing for React applications
@@ -76,7 +83,8 @@ _Frontend Technologies_
 - Git - Version control and collaboration
 
 **Installation and Setup**
-Prerequisites
+
+_Prerequisites_
 - Node.js (v14 or higher)
 - MongoDB (local installation or MongoDB Atlas)
 - npm or yarn package manager
@@ -106,6 +114,7 @@ Running Both Servers
 From the root directory, run both servers simultaneously: npm run dev
 
 **User Roles and Permissions**
+
 _Admin Role_
 - Full System Access: Complete administrative control
 - User Management: Create, update, and delete all user accounts

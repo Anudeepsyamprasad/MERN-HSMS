@@ -2,7 +2,9 @@
 A comprehensive, full-stack Hospital Management System built with the MERN stack (MongoDB, Express.js, React.js, Node.js). This application provides efficient management of patients, doctors, appointments, and medical records through secure authentication and role-based access control.
 
 **Project Overview**
+
 _What is this project?_
+
 This is a modern, web-based Hospital Management System designed to streamline healthcare operations by providing a centralized platform for managing patients, doctors, appointments, and medical records. The system serves as a digital solution for healthcare facilities to improve efficiency, reduce paperwork, and enhance patient care.
 
 _Why was this built?_
@@ -104,20 +106,27 @@ _Backend Setup_
 3. Configure environment variables
    # Update config.env with your configuration
    Required environment variables:
+   
    NODE_ENV=development
+   
    PORT=5000
+   
    MONGODB_URI=mongodb://localhost:27017/hospital_management
+   
    JWT_SECRET=your_jwt_secret_key_here_make_it_long_and_secure
+   
    JWT_EXPIRE=30d
    
-4. Start the backend server: npm run server
+5. Start the backend server:npm run server
    
 _Frontend Setup_
+
 1. Navigate to client directory: cd client
 2. Install frontend dependencies: npm install
 3. Start the React development server: npm start
    
-Running Both Servers
+Running Both Servers:
+
 From the root directory, run both servers simultaneously: npm run dev
 
 **User Roles and Permissions**

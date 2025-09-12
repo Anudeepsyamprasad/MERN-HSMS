@@ -1,4 +1,5 @@
 **MERN Hospital Management System (HSMS)**
+
 A comprehensive, full-stack Hospital Management System built with the MERN stack (MongoDB, Express.js, React.js, Node.js). This application provides efficient management of patients, doctors, appointments, and medical records through secure authentication and role-based access control.
 
 **Project Overview**
@@ -16,6 +17,7 @@ _Why was this built?_
 - Scalability: Build a system that can grow with healthcare facility needs
   
 _How does it work?_
+
 The system follows a client-server architecture with clear separation of concerns:
 - Frontend: React-based user interface with role-specific dashboards
 - Backend: RESTful API built with Express.js and Node.js
@@ -116,6 +118,7 @@ _Backend Setup_
    JWT_SECRET=your_jwt_secret_key_here_make_it_long_and_secure
    
    JWT_EXPIRE=30d
+
 4. Set up the database with sample data (optional)
    npm run setup
 
@@ -204,7 +207,6 @@ _Patient Role_
 - Accessible Design with proper ARIA labels and keyboard navigation
 - Consistent Styling using Bootstrap and custom CSS
 - Interactive Components with smooth animations and transitions
-
 
 **Important Notes**
 This is a demonstration project. 

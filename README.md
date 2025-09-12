@@ -1,8 +1,10 @@
 **MERN Hospital Management System (HSMS)**
 A comprehensive, full-stack Hospital Management System built with the MERN stack (MongoDB, Express.js, React.js, Node.js). This application provides efficient management of patients, doctors, appointments, and medical records through secure authentication and role-based access control.
+
 **Project Overview**
 _What is this project?_
 This is a modern, web-based Hospital Management System designed to streamline healthcare operations by providing a centralized platform for managing patients, doctors, appointments, and medical records. The system serves as a digital solution for healthcare facilities to improve efficiency, reduce paperwork, and enhance patient care.
+
 _Why was this built?_
 - Digital Transformation: Replace traditional paper-based systems with a modern digital solution
 - Efficiency: Streamline hospital operations and reduce administrative overhead
@@ -10,6 +12,7 @@ _Why was this built?_
 - Data Management: Centralize patient data, medical records, and appointment scheduling
 - Security: Implement secure authentication and authorization for sensitive medical data
 - Scalability: Build a system that can grow with healthcare facility needs
+  
 _How does it work?_
 The system follows a client-server architecture with clear separation of concerns:
 - Frontend: React-based user interface with role-specific dashboards
@@ -25,20 +28,20 @@ The system follows a client-server architecture with clear separation of concern
 - User registration and login with comprehensive validation
 - Password change functionality with security checks
 - Session management with automatic token refresh
-- 
+  
 _User Management_
 - Patient Management: Complete patient profiles with medical history, demographics, and contact information
 - Doctor Management: Doctor profiles with specializations, schedules, and professional details
 - Admin Panel: Full system administration with user management capabilities
 - Profile Management: Users can update their own profiles and preferences
-- 
+  
 _Appointment System_
 - Smart Appointment Booking with conflict detection and availability checking
 - Schedule Management for doctors with flexible time slots
 - Status Tracking (booked, confirmed, in-progress, completed, cancelled, no-show)
 - Real-time Availability checking based on doctor schedules
 - Appointment History and future booking management
-- 
+  
 _Medical Records Management_
 - Comprehensive Medical Records with detailed diagnoses and treatment plans
 - Vital Signs Tracking (blood pressure, heart rate, temperature, etc.)
@@ -46,14 +49,14 @@ _Medical Records Management_
 - Lab Results and Imaging record integration
 - Treatment Plans and follow-up scheduling
 - Medical History tracking across multiple visits
-- 
+  
 _Dashboard and Analytics_
 - Role-based Dashboards with relevant statistics and quick actions
 - Recent Activity Overview for all user types
 - Quick Action Buttons for common tasks
 - Real-time Data Updates and notifications
 - Statistics and Reports for administrative insights
-- 
+  
 **Technology Stack**
   
 _Backend Technologies_
@@ -66,7 +69,7 @@ _Backend Technologies_
 - express-validator - Input validation and sanitization
 - helmet - Security middleware for HTTP headers
 - cors - Cross-origin resource sharing configuration
-- 
+  
 _Frontend Technologies_
 - React.js - Modern UI library for building interactive user interfaces
 - React Router - Declarative routing for React applications
@@ -94,8 +97,10 @@ _Backend Setup_
 1. Clone the repository
    git clone <repository-url>
    cd MERN-HSMS
+   
 2. Install backend dependencies
    npm install
+   
 3. Configure environment variables
    # Update config.env with your configuration
    Required environment variables:
@@ -104,12 +109,14 @@ _Backend Setup_
    MONGODB_URI=mongodb://localhost:27017/hospital_management
    JWT_SECRET=your_jwt_secret_key_here_make_it_long_and_secure
    JWT_EXPIRE=30d
+   
 4. Start the backend server: npm run server
    
 _Frontend Setup_
 1. Navigate to client directory: cd client
 2. Install frontend dependencies: npm install
 3. Start the React development server: npm start
+   
 Running Both Servers
 From the root directory, run both servers simultaneously: npm run dev
 
@@ -124,6 +131,7 @@ _Admin Role_
 - Medical Records: Access to all medical records
 - System Analytics: View system statistics and reports
 - Data Management: Backup, restore, and system maintenance
+  
 _Doctor Role_
 - Patient Access: View and manage assigned patients
 - Medical Records: Create, update, and view medical records
@@ -132,6 +140,7 @@ _Doctor Role_
 - Profile Management: Update personal profile and schedule
 - Prescription Authority: Create and manage prescriptions
 - Treatment Planning: Develop and update treatment plans
+  
 _Patient Role_
 - Personal Profile: View and update personal information
 - Medical Records: View own medical records and history
@@ -139,6 +148,7 @@ _Patient Role_
 - Appointment History: View past and upcoming appointments
 - Health Tracking: Monitor personal health data and records
 - Communication: Contact healthcare providers through the system
+  
 **Security Features**
 - JWT Authentication with secure token management and expiration
 - Password Hashing using bcryptjs with salt rounds
@@ -149,6 +159,7 @@ _Patient Role_
 - Role-based Access Control for all sensitive operations
 - Data Sanitization to prevent injection attacks
 - Secure Headers for enhanced security posture
+  
 **UI/UX Features**
 - Responsive Design optimized for desktop, tablet, and mobile devices
 - Modern Interface with clean, intuitive navigation
@@ -163,6 +174,7 @@ _Patient Role_
 
 **Important Notes**
 This is a demonstration project. 
+
 **Disclaimer:** This Hospital system Management system is designed for educational and demonstration purposes. Built with the MERN Stack.
 
 

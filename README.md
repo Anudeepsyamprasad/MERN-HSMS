@@ -89,6 +89,7 @@ _Frontend Technologies_
 - ESLint - Code linting and quality assurance
 - Git - Version control and collaboration
 
+
 **Installation and Setup**
 
 _Prerequisites_
@@ -103,10 +104,10 @@ _Backend Setup_
    cd MERN-HSMS
    
 2. Install backend dependencies
-   npm install
+   npm --prefix backend install
    
 3. Configure environment variables
-   # Update config.env with your configuration
+   # Update backend/config.env with your configuration
    Required environment variables:
    
    NODE_ENV=development
@@ -123,12 +124,12 @@ _Backend Setup_
    npm run setup
 
 5. Start the backend server
-   npm run server
+   npm --prefix backend run server
 
 _Frontend Setup_
 
-1. Navigate to client directory
-   cd client
+1. Navigate to frontend directory
+   cd frontend
 2. Install frontend dependencies
    npm install
 3. Start the React development server

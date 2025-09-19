@@ -4,7 +4,7 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: process.env.NODE_ENV === 'production' 
     ? 'https://your-production-api.com' 
-    : 'http://localhost:5000',
+    : 'https://mern-hsms-backend.onrender.com',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

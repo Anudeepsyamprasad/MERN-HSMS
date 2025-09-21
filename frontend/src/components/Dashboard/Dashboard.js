@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useDashboard } from '../../contexts/DashboardContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../utils/axiosConfig';
 import requestThrottle from '../../utils/requestThrottle';
 import './Dashboard.css';
 import {
@@ -60,12 +60,12 @@ const Dashboard = () => {
           'Content-Type': 'application/json'
         };
         
-        const statsResponse = await axios.get('/api/appointments/stats', { headers });
+        const statsResponse = await api.get('/api/appointments/stats');
         setStats(statsResponse.data);
 
         // Fetch recent appointments (all appointments, sorted by most recent first)
         try {
-          const appointmentsResponse = await axios.get('/api/appointments?limit=5', { headers });
+          const appointmentsResponse = await api.get('/api/appointments?limit=5');
           const appointmentsData = appointmentsResponse.data;
           
           // Handle different response structures
@@ -89,7 +89,7 @@ const Dashboard = () => {
         // Check if patient has medical records
         if (user?.role === 'patient') {
           try {
-            const medicalRecordsResponse = await axios.get('/api/medical-records', { headers });
+            const medicalRecordsResponse = await api.get('/api/medical-records');
             const records = Array.isArray(medicalRecordsResponse.data) 
               ? medicalRecordsResponse.data 
               : (medicalRecordsResponse.data.medicalRecords || []);

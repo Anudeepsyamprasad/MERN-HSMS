@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../utils/axiosConfig';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import { FaPlus, FaSearch, FaEdit, FaTrash, FaEye, FaFilter, FaFileMedical } from 'react-icons/fa';
 import { format } from 'date-fns';
@@ -34,12 +34,7 @@ const MedicalRecords = () => {
   const fetchMedicalRecords = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/medical-records', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await api.get('/api/medical-records');
 
       // Handle the response structure from the backend
       const data = response.data;
@@ -112,11 +107,11 @@ const MedicalRecords = () => {
       if (selectedRecord) {
         // Update existing record
         console.log('Updating existing record:', selectedRecord._id);
-        await axios.put(`/api/medical-records/${selectedRecord._id}`, formData, { headers });
+        await api.put(`/api/medical-records/${selectedRecord._id}`, formData);
       } else {
         // Create new record
         console.log('Creating new record with data:', formData);
-        const response = await axios.post('/api/medical-records', formData, { headers });
+        const response = await api.post('/api/medical-records', formData);
         console.log('Create response:', response.data);
       }
 
@@ -150,11 +145,7 @@ const MedicalRecords = () => {
     setModalLoading(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/medical-records/${selectedRecord._id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      await api.delete(`/api/medical-records/${selectedRecord._id}`);
 
       // Refresh the records list
       await fetchMedicalRecords();

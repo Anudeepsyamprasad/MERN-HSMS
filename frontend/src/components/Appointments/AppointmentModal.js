@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes, FaSave, FaUser, FaUserMd, FaCalendar, FaClock, FaStethoscope, FaFileAlt } from 'react-icons/fa';
-import axios from 'axios';
+import api from '../../utils/axiosConfig';
 import { useAuth } from '../../contexts/AuthContext';
 import './AppointmentModal.css';
 
@@ -69,12 +69,7 @@ const AppointmentModal = ({ isOpen, onClose, appointment = null, onSave }) => {
 
       console.log('Fetching patients for role:', user?.role);
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/patients', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await api.get('/api/patients');
       const patients = response.data.patients || response.data || [];
       console.log('Fetched patients:', patients.length);
       setPatients(patients);
@@ -88,12 +83,7 @@ const AppointmentModal = ({ isOpen, onClose, appointment = null, onSave }) => {
     try {
       console.log('Fetching doctors for role:', user?.role);
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/doctors', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await api.get('/api/doctors');
       const doctors = response.data.doctors || response.data || [];
       console.log('Fetched doctors:', doctors.length);
       setDoctors(doctors);

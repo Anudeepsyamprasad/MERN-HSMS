@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../../utils/axiosConfig';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import { FaPlus, FaSearch, FaEdit, FaTrash, FaEye, FaFilter, FaUser, FaUserMd, FaUserCog, FaUserSlash } from 'react-icons/fa';
 import UserModal from './UserModal';
@@ -9,7 +9,6 @@ import { useDashboard } from '../../contexts/DashboardContext';
 import requestThrottle from '../../utils/requestThrottle';
 import { retryApiCall } from '../../utils/apiRetry';
 import toast from 'react-hot-toast';
-import './Users.css';
 
 const Users = () => {
   const { triggerRefresh } = useDashboard();
@@ -38,21 +37,18 @@ const Users = () => {
       // Throttle the request to prevent rate limiting
       await requestThrottle.throttle('fetchUsers', 500); // 500ms throttle
       
-      const token = localStorage.getItem('token');
+      console.log('Fetching users...');
       
       // Use retry mechanism for API call
       const response = await retryApiCall(async () => {
-        return await axios.get('/api/users', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
+        return await api.get('/api/users');
       }, {
         maxRetries: 2, // Fewer retries for user list
         baseDelay: 2000 // 2 second base delay
       });
 
+      console.log('Fetch users response:', response.data);
+      
       // Handle the response structure from the backend
       const data = response.data;
       setUsers(data.users || data || []);
@@ -136,12 +132,8 @@ const Users = () => {
   const handleActivateUser = async (user) => {
     setModalLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`/api/users/${user._id}/activate`, {}, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      console.log('Activating user:', user._id);
+      await api.put(`/api/users/${user._id}/activate`);
 
       // Refresh the users list
       await fetchUsers();
@@ -162,18 +154,14 @@ const Users = () => {
   const handleSaveUser = async (formData) => {
     setModalLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      const headers = {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-
       if (selectedUser) {
         // Update existing user
-        await axios.put(`/api/users/${selectedUser._id}`, formData, { headers });
+        console.log('Updating user:', selectedUser._id, formData);
+        await api.put(`/api/users/${selectedUser._id}`, formData);
       } else {
         // Create new user
-        await axios.post('/api/users', formData, { headers });
+        console.log('Creating new user:', formData);
+        await api.post('/api/users', formData);
       }
 
       // Refresh the users list
@@ -216,20 +204,12 @@ const Users = () => {
       if (actionType === 'delete') {
         // Hard delete user
         console.log('Attempting to delete user:', selectedUser._id);
-        await axios.delete(`/api/users/${selectedUser._id}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        await api.delete(`/api/users/${selectedUser._id}`);
         toast.success('User permanently deleted successfully!');
       } else if (actionType === 'deactivate') {
         // Deactivate user
         console.log('Attempting to deactivate user:', selectedUser._id);
-        await axios.put(`/api/users/${selectedUser._id}/deactivate`, {}, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        await api.put(`/api/users/${selectedUser._id}/deactivate`);
         toast.success('User deactivated successfully!');
       }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
+import api from '../../utils/axiosConfig';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import { FaPlus, FaSearch, FaEdit, FaTrash, FaEye, FaFilter, FaCalendarAlt } from 'react-icons/fa';
 import { format } from 'date-fns';
@@ -43,12 +43,7 @@ const Appointments = () => {
   const fetchAppointments = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/appointments', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await api.get('/api/appointments');
 
       // Handle the response structure from the backend
       const data = response.data;
@@ -101,12 +96,12 @@ const Appointments = () => {
       if (selectedAppointment) {
         // Update existing appointment
         console.log('Updating existing appointment:', selectedAppointment._id);
-        const response = await axios.put(`/api/appointments/${selectedAppointment._id}`, formData, { headers });
+        const response = await api.put(`/api/appointments/${selectedAppointment._id}`, formData);
         console.log('Update response:', response.data);
       } else {
         // Create new appointment
         console.log('Creating new appointment with data:', formData);
-        const response = await axios.post('/api/appointments', formData, { headers });
+        const response = await api.post('/api/appointments', formData);
         console.log('Create response:', response.data);
       }
 
@@ -132,12 +127,7 @@ const Appointments = () => {
     setModalLoading(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/appointments/${selectedAppointment._id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      await api.delete(`/api/appointments/${selectedAppointment._id}`);
 
       // Refresh the appointments list
       await fetchAppointments();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../utils/axiosConfig';
 import { FaTimes, FaCalendarAlt, FaClock, FaUser, FaPhone, FaStethoscope, FaCheckCircle, FaExclamationTriangle, FaTimesCircle, FaSpinner } from 'react-icons/fa';
 import './DoctorScheduleModal.css';
 
@@ -48,11 +48,7 @@ const DoctorScheduleModal = ({ isOpen, onClose, doctor }) => {
           endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
       }
 
-      const response = await axios.get('/api/appointments', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+      const response = await api.get('/api/appointments', {
         params: {
           doctorId: doctor._id,
           startDate: startDate.toISOString(),

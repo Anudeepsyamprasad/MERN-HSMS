@@ -99,7 +99,7 @@ router.get('/:id', protect, async (req, res) => {
 // @access  Private (Admin only)
 router.post('/', [
   protect,
-  // authorize('admin'), // Temporarily disabled for testing
+  authorize('admin'),
   [
     body('name').notEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('Valid email is required'),
@@ -149,7 +149,7 @@ router.post('/', [
 // @access  Private (Admin only)
 router.put('/:id', [
   protect,
-  // authorize('admin'), // Temporarily disabled for testing
+  authorize('admin'),
   [
     body('name').optional().notEmpty().withMessage('Name cannot be empty'),
     body('email').optional().isEmail().withMessage('Valid email is required'),
@@ -235,7 +235,7 @@ router.put('/:id', [
 // @route   DELETE /api/doctors/:id
 // @desc    Delete doctor
 // @access  Private (Admin only)
-router.delete('/:id', [protect, /* authorize('admin') */], async (req, res) => {
+router.delete('/:id', [protect, authorize('admin')], async (req, res) => {
   try {
     console.log('Deleting doctor:', req.params.id);
     console.log('User making request:', req.user);

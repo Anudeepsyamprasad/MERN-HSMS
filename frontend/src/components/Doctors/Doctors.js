@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../utils/axiosConfig';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import DoctorModal from './DoctorModal';
 import DoctorDetailsModal from './DoctorDetailsModal';
@@ -34,15 +34,9 @@ const Doctors = () => {
 
   const fetchDoctors = async () => {
     try {
-      const token = localStorage.getItem('token');
-      console.log('Fetching doctors with token:', token ? 'Present' : 'Missing');
+      console.log('Fetching doctors...');
       
-      const response = await axios.get('/api/doctors', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await api.get('/api/doctors');
 
       console.log('Fetch doctors response:', response.data);
       
@@ -64,21 +58,15 @@ const Doctors = () => {
   const handleSaveDoctor = async (formData) => {
     setModalLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      const headers = {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-
       let response;
       if (selectedDoctor) {
         // Update existing doctor
         console.log('Updating doctor:', selectedDoctor._id, formData);
-        response = await axios.put(`/api/doctors/${selectedDoctor._id}`, formData, { headers });
+        response = await api.put(`/api/doctors/${selectedDoctor._id}`, formData);
       } else {
         // Create new doctor
         console.log('Creating new doctor:', formData);
-        response = await axios.post('/api/doctors', formData, { headers });
+        response = await api.post('/api/doctors', formData);
       }
 
       console.log('Save response:', response.data);
@@ -101,15 +89,9 @@ const Doctors = () => {
   const handleDeleteDoctor = async () => {
     setModalLoading(true);
     try {
-      const token = localStorage.getItem('token');
       console.log('Deleting doctor:', selectedDoctor._id);
       
-      const response = await axios.delete(`/api/doctors/${selectedDoctor._id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await api.delete(`/api/doctors/${selectedDoctor._id}`);
 
       console.log('Delete response:', response.data);
 

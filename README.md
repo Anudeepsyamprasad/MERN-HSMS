@@ -6,9 +6,10 @@ password: admin123
 
 Test Credentials:
 
-Admin: admin@hospital.com / admin123
-Doctor: doctor1@hospital.com / doctor123
-Patient: patient1@hospital.com / patient123
+Admin: [ admin@hospital.com / admin123 ]
+
+Doctor: [ doctor1@hospital.com / doctor123 ]
+Patient: [ patient1@hospital.com / patient123 ]
 
 **MERN Hospital Management System (HSMS)**
 

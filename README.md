@@ -3,6 +3,13 @@ Live Demo: https://asp-hospital-management-system.onrender.com
 user : admin@hospital.com
 password: admin123
 
+
+Test Credentials:
+
+Admin: admin@hospital.com / admin123
+Doctor: doctor1@hospital.com / doctor123
+Patient: patient1@hospital.com / patient123
+
 **MERN Hospital Management System (HSMS)**
 
 A comprehensive, full-stack Hospital Management System built with the MERN stack (MongoDB, Express.js, React.js, Node.js). This application provides efficient management of patients, doctors, appointments, and medical records through secure authentication and role-based access control.

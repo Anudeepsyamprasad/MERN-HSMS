@@ -19,6 +19,11 @@ const protect = async (req, res, next) => {
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+      // A refresh token must never work as an access token
+      if (decoded.type === 'refresh') {
+        return res.status(401).json({ message: 'Not authorized, invalid token' });
+      }
+
       // Get user from token
       req.user = await User.findById(decoded.id).select('-passwordHash');
 

@@ -7,8 +7,13 @@ const generateAccessToken = (userId) => {
   });
 };
 
+// Refresh tokens use their own secret so a leaked access-token secret
+// can't be used to mint long-lived refresh tokens (and vice versa).
+// Falls back to JWT_SECRET so existing deployments keep working.
+const refreshSecret = () => process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET;
+
 const generateRefreshToken = (userId) => {
-  return jwt.sign({ id: userId, type: 'refresh' }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: userId, type: 'refresh' }, refreshSecret(), {
     expiresIn: '7d',
   });
 };
@@ -18,6 +23,16 @@ const verifyToken = (token) => {
     return jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
     throw new Error('Invalid token');
+  }
+};
+
+const verifyRefreshToken = (token) => {
+  try {
+    const decoded = jwt.verify(token, refreshSecret());
+    if (decoded.type !== 'refresh') throw new Error('Wrong token type');
+    return decoded;
+  } catch (error) {
+    throw new Error('Invalid refresh token');
   }
 };
 
@@ -66,6 +81,7 @@ const extractTokenFromHeader = (authHeader) => {
 const validateTokenAndGetUser = async (token) => {
   try {
     const decoded = verifyToken(token);
+    if (decoded.type === 'refresh') throw new Error('Wrong token type');
     const user = await User.findById(decoded.id).select('-passwordHash');
     if (!user || !user.isActive) {
       throw new Error('User not found or inactive');
@@ -81,6 +97,7 @@ module.exports = {
   generateRefreshToken,
   generateTokenPair,
   verifyToken,
+  verifyRefreshToken,
   decodeToken,
   isTokenExpired,
   getTokenExpiration,

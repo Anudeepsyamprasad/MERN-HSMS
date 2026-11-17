@@ -165,10 +165,6 @@ router.put('/:id', [
       }
     });
 
-    console.log('Updating patient with data:', req.body);
-    console.log('Date of birth received:', req.body.dateOfBirth);
-    console.log('Password field received:', req.body.password ? 'YES (length: ' + req.body.password.length + ')' : 'NO');
-    console.log('Username field received:', req.body.username ? 'YES (' + req.body.username + ')' : 'NO');
 
     await patient.save();
     
@@ -232,7 +228,7 @@ router.post('/:id/test-login', [protect, authorize('admin')], async (req, res) =
     }
     
     // Check password
-    const isMatch = user.comparePassword(password);
+    const isMatch = await user.comparePassword(password);
     
     if (!isMatch) {
       return res.status(401).json({ 

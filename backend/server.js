@@ -3,210 +3,135 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-// Load environment variables
+const { demoGuard, isDemoMode } = require('./middleware/demoGuard');
+
+// Load environment variables from backend/config.env when running locally
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({ path: './config.env' });
 }
 
+const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
 
-// Trust proxy - needed for rate limiting behind proxies
+// Trust proxy - needed for rate limiting behind Render/Vercel proxies
 app.set('trust proxy', 1);
 
-// Security middleware
+// Security headers
 app.use(helmet());
 
-// CORS configuration
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://asp-hospital-management-system.onrender.com']
-    : ['http://localhost:3000', 'http://127.0.0.1:3000'],
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// CORS: allowed frontend URLs come from CLIENT_URL (comma-separated), so
+// moving the frontend to another host only needs an env var change.
+const allowedOrigins = (process.env.CLIENT_URL ||
+  (isProduction
+    ? 'https://asp-hospital-management-system.onrender.com'
+    : 'http://localhost:3000,http://127.0.0.1:3000'))
+  .split(',')
+  .map((url) => url.trim().replace(/\/$/, ''))
+  .filter(Boolean);
 
-// Rate limiting - more lenient for development
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'production' ? 100 : 1000, // 1000 requests in dev, 100 in production
-  message: {
-    error: 'Too many requests from this IP, please try again later.',
-    retryAfter: '15 minutes'
-  },
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-app.use(limiter);
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+    optionsSuccessStatus: 200,
+  })
+);
 
-// Body parser middleware
+// Rate limiting
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: isProduction ? 100 : 1000,
+    message: {
+      error: 'Too many requests from this IP, please try again later.',
+      retryAfter: '15 minutes',
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database connection check middleware with retry logic
-app.use(async (req, res, next) => {
-  const connectionState = mongoose.connection.readyState;
-  console.log(`Database connection state: ${connectionState}`);
-  
-  if (connectionState !== 1) {
-    console.log(`Database not ready, state: ${connectionState}. Attempting to reconnect...`);
-    
-    try {
-      // Try to reconnect if disconnected
-      if (connectionState === 0) {
-        await mongoose.connect(process.env.MONGODB_URI, {
-          serverSelectionTimeoutMS: 5000,
-          socketTimeoutMS: 45000,
-          maxPoolSize: 10,
-          minPoolSize: 2,
-          family: 4,
-          bufferCommands: false,
-          retryWrites: true,
-          retryReads: true,
-          connectTimeoutMS: 5000,
-          heartbeatFrequencyMS: 10000,
-          maxIdleTimeMS: 0
-        });
-        
-        // Wait a moment for connection to stabilize
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        if (mongoose.connection.readyState === 1) {
-          console.log('Database reconnected successfully');
-          return next();
-        }
-      }
-      
-      return res.status(503).json({ 
-        message: 'Database connection not ready. Please try again in a moment.',
-        state: connectionState
-      });
-    } catch (error) {
-      console.log('Failed to reconnect to database:', error.message);
-      return res.status(503).json({ 
-        message: 'Database connection failed. Please try again in a moment.',
-        state: connectionState
-      });
-    }
+// Health check. Answers even while the database is still connecting, so the
+// frontend can use it to wake up a sleeping free-tier server.
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'connecting',
+    demoMode: isDemoMode(),
+  });
+});
+
+// If the database is unavailable, fail fast with a clear message.
+// (The MongoDB driver reconnects on its own; no manual retry loop needed.)
+app.use('/api', (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ message: 'Database is starting up. Please retry in a few seconds.' });
   }
   next();
 });
 
-// Connect to MongoDB
-const connectDB = async () => {
-  try {
-    // Configure mongoose for better connection stability
-    mongoose.set('bufferCommands', false);
-    mongoose.set('strictQuery', false);
-    
-    const options = {
-      serverSelectionTimeoutMS: 10000, // Keep trying to send operations for 10 seconds
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      maxPoolSize: 10, // Maintain up to 10 socket connections
-      minPoolSize: 2, // Maintain at least 2 socket connections
-      family: 4, // Use IPv4, skip trying IPv6
-      bufferCommands: false, // Disable mongoose buffering
-      retryWrites: true, // Retry writes on network errors
-      retryReads: true, // Retry reads on network errors
-      connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
-      heartbeatFrequencyMS: 10000, // Send a ping every 10 seconds
-      maxIdleTimeMS: 0 // Don't close connections due to inactivity
-    };
-    
-    await mongoose.connect(process.env.MONGODB_URI, options);
-    
-    // Wait for connection to be ready
-    await mongoose.connection.db.admin().ping();
-    console.log('MongoDB Connected and ready');
-    console.log('Connection state after ping:', mongoose.connection.readyState);
-    
-    // Set up automatic reconnection
-    mongoose.connection.on('disconnected', () => {
-      console.log('MongoDB disconnected, attempting to reconnect...');
-      setTimeout(() => {
-        mongoose.connect(process.env.MONGODB_URI, options).catch(err => {
-          console.log('Reconnection failed:', err.message);
-        });
-      }, 1000);
-    });
-    
-  } catch (err) {
-    console.log('MongoDB Connection Error:', err);
-    process.exit(1);
-  }
-};
+// Protect the public demo data (only active when DEMO_MODE=true)
+app.use(demoGuard);
 
-// MongoDB connection event handlers
-mongoose.connection.on('connected', () => {
-  console.log('Mongoose connected to MongoDB');
-  console.log('Connection state:', mongoose.connection.readyState);
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/patients', require('./routes/patients'));
+app.use('/api/doctors', require('./routes/doctors'));
+app.use('/api/appointments', require('./routes/appointments'));
+app.use('/api/medical-records', require('./routes/medical-records'));
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ message: 'Route not found' });
 });
 
-mongoose.connection.on('error', (err) => {
-  console.log('Mongoose connection error:', err);
+// Error handler: log details on the server, never send internals to the client
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ message: 'Server error' });
 });
-
-mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose disconnected from MongoDB');
-  console.log('Connection state:', mongoose.connection.readyState);
-});
-
-mongoose.connection.on('reconnected', () => {
-  console.log('Mongoose reconnected to MongoDB');
-  console.log('Connection state:', mongoose.connection.readyState);
-});
-
 
 const PORT = process.env.PORT || 5000;
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
-  console.log('Unhandled Promise Rejection:', err.message);
-  // Close server & exit process
-  process.exit(1);
-});
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.log('Uncaught Exception:', err.message);
-  process.exit(1);
-});
-
-// Connect to database and start server
 const startServer = async () => {
-  try {
-    await connectDB();
-    
-    // Routes - only load after database connection is established
-    app.use('/api/auth', require('./routes/auth'));
-    app.use('/api/users', require('./routes/users'));
-    app.use('/api/patients', require('./routes/patients'));
-    app.use('/api/doctors', require('./routes/doctors'));
-    app.use('/api/appointments', require('./routes/appointments'));
-    app.use('/api/medical-records', require('./routes/medical-records'));
-    
-    console.log('Routes loaded successfully');
-    
-    // Error handling middleware - must be after routes
-    app.use((err, req, res, next) => {
-      console.error('Error details:', err);
-      console.error('Error stack:', err.stack);
-      res.status(500).json({ message: 'Server error', error: err.message });
-    });
-
-    // 404 handler - must be after routes
-    app.use('*', (req, res) => {
-      res.status(404).json({ message: 'Route not found' });
-    });
-    
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
+  if (!process.env.MONGODB_URI || !process.env.JWT_SECRET) {
+    console.error('Missing MONGODB_URI or JWT_SECRET. See backend/.env.example');
     process.exit(1);
   }
+
+  mongoose.set('strictQuery', false);
+  mongoose.connection.on('connected', () => console.log('MongoDB connected'));
+  mongoose.connection.on('disconnected', () => console.log('MongoDB disconnected (driver will reconnect)'));
+  mongoose.connection.on('error', (err) => console.error('MongoDB error:', err.message));
+
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+      family: 4, // IPv4 only, avoids slow IPv6 lookups on some hosts
+    });
+  } catch (err) {
+    console.error('Could not connect to MongoDB:', err.message);
+    process.exit(1);
+  }
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} (demo mode: ${isDemoMode()})`);
+  });
 };
 
-startServer();
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Promise Rejection:', err);
+  process.exit(1);
+});
 
+// Only start the server when run directly (lets tests import the app)
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = app;

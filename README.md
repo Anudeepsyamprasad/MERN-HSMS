@@ -1,15 +1,15 @@
-Live Demo: https://asp-hospital-management-system.onrender.com
+**Live Demo:** https://asp-hospital-management-system.onrender.com
 
-user : admin@hospital.com
-password: admin123
+| Role | Email | Password |
+|---|---|---|
+| Admin | admin@hospital.com | admin123 |
+| Doctor | doctor1@hospital.com | doctor123 |
+| Patient | patient1@hospital.com | patient123 |
 
-
-Test Credentials:
-
-Admin: [ admin@hospital.com / admin123 ]
-
-Doctor: [ doctor1@hospital.com / doctor123 ]
-Patient: [ patient1@hospital.com / patient123 ]
+> **About the live demo**
+> - It runs on free hosting (Render free instance + MongoDB Atlas free cluster). The backend sleeps when idle, so the first load can take up to a minute; the page shows a "waking up" banner meanwhile.
+> - Demo mode is on: deleting records, managing users and changing passwords are disabled so the demo stays usable for everyone. Everything else works.
+> - The demo data is reset every night (02:00 IST) by a GitHub Actions job.
 
 **MERN Hospital Management System (HSMS)**
 
@@ -120,21 +120,24 @@ _Backend Setup_
    npm --prefix backend install
    
 3. Configure environment variables
-   # Update backend/config.env with your configuration
-   Required environment variables:
-   
-   NODE_ENV=development
-   
-   PORT=5000
-   
-   MONGODB_URI=mongodb://localhost:27017/hospital_management
-   
-   JWT_SECRET=your_jwt_secret_key_here_make_it_long_and_secure
-   
-   JWT_EXPIRE=30d
+   Copy `backend/config.env.example` to `backend/config.env` and fill it in:
+
+   | Variable | Purpose |
+   |---|---|
+   | `MONGODB_URI` | MongoDB connection string (local or Atlas) |
+   | `JWT_SECRET` | Secret for access tokens |
+   | `JWT_REFRESH_SECRET` | Different secret for refresh tokens |
+   | `JWT_EXPIRE` | Access token lifetime, e.g. `30d` |
+   | `CLIENT_URL` | Frontend URL(s) allowed by CORS, comma-separated |
+   | `DEMO_MODE` | `true` blocks deletes, user management and password changes |
+
+   For the frontend, set `REACT_APP_API_URL` (see `frontend/.env.example`).
 
 4. Set up the database with sample data (optional)
-   npm run setup
+   npm run setup        # add sample data
+   npm run reset-demo   # wipe everything and reseed (used by the nightly demo reset)
+
+   Run the backend tests with `npm --prefix backend test`.
 
 5. Start the backend server
    npm --prefix backend run server
@@ -201,8 +204,11 @@ _Patient Role_
 - Communication: Contact healthcare providers through the system
   
 **Security Features**
-- JWT Authentication with secure token management and expiration
-- Password Hashing using bcryptjs with salt rounds
+- JWT Authentication with separate secrets for access and refresh tokens (a refresh token can't be used as an access token)
+- Password Hashing using bcryptjs (async, cost 12) so logins don't block the server
+- Public sign-up can only create patient accounts; doctors and admins are created by an admin
+- Demo mode for the public live demo (no deletes, read-only user management)
+- Automated tests for these rules (Jest + Supertest), run on every push by GitHub Actions
 - Input Validation with express-validator for all endpoints
 - Rate Limiting to prevent API abuse and brute force attacks
 - CORS Protection for secure cross-origin requests

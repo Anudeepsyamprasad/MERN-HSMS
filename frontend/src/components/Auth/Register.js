@@ -95,8 +95,10 @@ const Register = () => {
             <div className="form-group">
               <p className="signup-note">
                 <FaUserTag className="signup-note-icon" />
-                Sign-up creates a <strong>patient</strong> account. Doctor and admin
-                accounts are created by a hospital admin.
+                <span>
+                  Sign-up creates a <strong>patient</strong> account. Doctor and admin
+                  accounts are created by a hospital admin.
+                </span>
               </p>
             </div>
 

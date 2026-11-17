@@ -13,6 +13,7 @@ import MedicalRecords from './components/MedicalRecords/MedicalRecords';
 import Users from './components/Users/Users';
 import Profile from './components/Profile/Profile';
 import LoadingSpinner from './components/UI/LoadingSpinner';
+import ServerWakeBanner from './components/UI/ServerWakeBanner';
 import './form-styles.css';
 
 const PrivateRoute = ({ children, allowedRoles = [] }) => {
@@ -56,6 +57,7 @@ function App() {
 
   return (
     <div className="App">
+      <ServerWakeBanner />
       <DashboardProvider>
         <Routes>
         {/* Public Routes */}

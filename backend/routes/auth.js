@@ -1,13 +1,12 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const mongoose = require('mongoose');
 const User = require('../models/User');
 const { protect } = require('../middleware/auth');
 const {
   generateAccessToken,
   generateRefreshToken,
   generateTokenPair,
-  verifyToken,
+  verifyRefreshToken,
   extractTokenFromHeader,
   validateTokenAndGetUser,
 } = require('../utils/jwtUtils');
@@ -20,8 +19,10 @@ const generateToken = (id) => {
 };
 
 // @route   POST /api/auth/register
-// @desc    Register a new user
+// @desc    Register a new patient account
 // @access  Public
+// Public sign-up can only ever create patients. Doctor and admin accounts are
+// created by an admin through POST /api/users, which is admin-only.
 router.post(
   '/register',
   [
@@ -32,7 +33,10 @@ router.post(
       .withMessage('Username can only contain letters, numbers, and underscores'),
     body('email').isEmail().withMessage('Please enter a valid email'),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
-    body('role').isIn(['patient', 'doctor', 'admin']).withMessage('Role must be patient, doctor, or admin'),
+    body('role')
+      .optional()
+      .equals('patient')
+      .withMessage('Only patient accounts can be created through sign-up'),
   ],
   async (req, res) => {
     try {
@@ -41,7 +45,8 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { username, email, password, role } = req.body;
+      const { username, email, password } = req.body;
+      const role = 'patient'; // never trust a role sent by the client
 
       const userExists = await User.findOne({ $or: [{ email }, { username }] });
       if (userExists) {
@@ -78,35 +83,6 @@ router.post(
 
       const { email, password } = req.body;
 
-      // Check database connection state and ensure it's ready
-      if (mongoose.connection.readyState !== 1) {
-        if (mongoose.connection.readyState === 0) {
-          try {
-            await mongoose.connect(process.env.MONGODB_URI, {
-              serverSelectionTimeoutMS: 5000,
-              socketTimeoutMS: 45000,
-              maxPoolSize: 10,
-              minPoolSize: 2,
-              family: 4,
-              bufferCommands: false,
-              retryWrites: true,
-              retryReads: true,
-              connectTimeoutMS: 5000,
-              heartbeatFrequencyMS: 10000,
-              maxIdleTimeMS: 0,
-            });
-            await new Promise((resolve) => setTimeout(resolve, 100));
-            if (mongoose.connection.readyState !== 1) {
-              return res.status(503).json({ message: 'Database connection failed' });
-            }
-          } catch (error) {
-            return res.status(503).json({ message: 'Database connection failed' });
-          }
-        } else {
-          return res.status(503).json({ message: 'Database not ready' });
-        }
-      }
-
       const user = await User.findOne({ email });
       if (!user) {
         return res.status(401).json({ message: 'Invalid credentials' });
@@ -116,7 +92,7 @@ router.post(
         return res.status(401).json({ message: 'Account is deactivated' });
       }
 
-      const isMatch = user.comparePassword(password);
+      const isMatch = await user.comparePassword(password);
       if (!isMatch) {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
@@ -128,7 +104,7 @@ router.post(
       res.json({ success: true, accessToken, refreshToken, user: user.getPublicProfile() });
     } catch (error) {
       console.error('Login error:', error);
-      res.status(500).json({ message: 'Server error during login', error: error.message });
+      res.status(500).json({ message: 'Server error during login' });
     }
   }
 );
@@ -172,7 +148,7 @@ router.put(
 
       const { currentPassword, newPassword } = req.body;
       const user = await User.findById(req.user._id);
-      const isMatch = user.comparePassword(currentPassword);
+      const isMatch = await user.comparePassword(currentPassword);
       if (!isMatch) {
         return res.status(400).json({ message: 'Current password is incorrect' });
       }
@@ -195,10 +171,7 @@ router.post('/refresh', async (req, res) => {
     if (!refreshToken) {
       return res.status(400).json({ message: 'Refresh token is required' });
     }
-    const decoded = verifyToken(refreshToken);
-    if (decoded.type !== 'refresh') {
-      return res.status(401).json({ message: 'Invalid token type' });
-    }
+    const decoded = verifyRefreshToken(refreshToken);
     const user = await User.findById(decoded.id).select('-passwordHash');
     if (!user || !user.isActive) {
       return res.status(401).json({ message: 'User not found or inactive' });

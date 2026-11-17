@@ -23,7 +23,9 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-    const result = await registerUser(data);
+    // Role is decided by the server (always patient for public sign-up)
+    const { confirmPassword, ...userData } = data;
+    const result = await registerUser(userData);
     setIsLoading(false);
     
     if (result.success) {
@@ -91,25 +93,11 @@ const Register = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="role">Role</label>
-              <div className="input-wrapper">
-                <FaUserTag className="input-icon" />
-                <select
-                  id="role"
-                  {...register('role', {
-                    required: 'Role is required'
-                  })}
-                  className={errors.role ? 'error' : ''}
-                >
-                  <option value="">Select your role</option>
-                  <option value="patient">Patient</option>
-                  <option value="doctor">Doctor</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-              {errors.role && (
-                <div className="error-message">{errors.role.message}</div>
-              )}
+              <p className="signup-note">
+                <FaUserTag className="signup-note-icon" />
+                Sign-up creates a <strong>patient</strong> account. Doctor and admin
+                accounts are created by a hospital admin.
+              </p>
             </div>
 
             <div className="form-group">

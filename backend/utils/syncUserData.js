@@ -55,10 +55,7 @@ const syncUserData = async (recordType, recordId, updateData, originalEmail) => 
     
     // If password was provided, update it
     if (updateData.password) {
-      console.log(`Password provided: "${updateData.password}" (length: ${updateData.password.length})`);
       userUpdateData.password = updateData.password;
-    } else {
-      console.log('No password provided in update data');
     }
     
     // Ensure user is active when patient is updated
@@ -66,7 +63,8 @@ const syncUserData = async (recordType, recordId, updateData, originalEmail) => 
     
     // Update user record if there are changes
     if (Object.keys(userUpdateData).length > 0) {
-      const updatedFields = { ...userUpdateData };
+      // Never log the password, even in plain server logs
+      const { password: _omit, ...updatedFields } = userUpdateData;
       
       // Get the user and update all fields in one operation
       const user = await User.findById(record.user);

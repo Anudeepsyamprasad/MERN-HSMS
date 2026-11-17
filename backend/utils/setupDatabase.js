@@ -12,14 +12,17 @@ async function setupDatabase() {
     console.log('Setting up database...\n');
     
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI is not set');
+    }
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
     
-    // Clear existing data (optional - uncomment if you want to start fresh)
-    // await clearDatabase();
+    // Wipe all data first when run with --reset (used by the nightly demo reset)
+    if (process.argv.includes('--reset')) {
+      console.log('--reset given: clearing existing data');
+      await clearDatabase();
+    }
     
     // Create users with proper roles
     await createUsers();
@@ -52,6 +55,7 @@ async function setupDatabase() {
   } catch (error) {
     console.error(' Database setup failed:', error.message);
     console.error('Full error:', error);
+    process.exitCode = 1; // make CI fail loudly
   } finally {
     await mongoose.disconnect();
     console.log('\n🔌 Disconnected from MongoDB');

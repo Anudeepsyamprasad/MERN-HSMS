@@ -39,15 +39,26 @@ const UserSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Virtual for password (not stored in DB)
+// Virtual for password (not stored in DB).
+// Setting user.password only remembers the plain text; it is hashed in the
+// pre-validate hook below so hashing never blocks the event loop.
 UserSchema.virtual('password')
   .set(function(password) {
-    this.passwordHash = bcrypt.hashSync(password, 12);
+    this._plainPassword = password;
+    // Placeholder so the "required" check passes; replaced before saving.
+    if (!this.passwordHash) this.passwordHash = 'pending-hash';
   });
 
-// Method to compare password
+UserSchema.pre('validate', async function() {
+  if (this._plainPassword) {
+    this.passwordHash = await bcrypt.hash(this._plainPassword, 12);
+    this._plainPassword = undefined;
+  }
+});
+
+// Method to compare password (async: always use `await user.comparePassword(...)`)
 UserSchema.methods.comparePassword = function(candidatePassword) {
-  return bcrypt.compareSync(candidatePassword, this.passwordHash);
+  return bcrypt.compare(candidatePassword, this.passwordHash);
 };
 
 // Method to get public profile

@@ -247,3 +247,22 @@
 .text-secondary-500 {
   color: #6b7280;
 }
+
+.signup-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #eef4ff;
+  color: #334155;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.signup-note-icon {
+  margin-top: 2px;
+  flex-shrink: 0;
+  color: #2563eb;
+}
